@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from db import SessionLocal, engine
 from models import Base, User, Card, StatusEnum, Transaction
+from utils import hash_password
 
 app = FastAPI()
 
@@ -33,7 +34,7 @@ async def register(email: str = Form(...), password: str = Form(...), db: Sessio
         raise HTTPException(status_code=404, detail="User already exist with this email address")
     else:
         # Create user
-        new_user = User(email=email, password=password)
+        new_user = User(email=email, password=hash_password(password))
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
