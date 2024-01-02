@@ -37,6 +37,7 @@ Go file (transaction-postman-collection.json) and import to postman
 ## Features
 
 * Register
+* Login
 * Cards
   * List cards
   * Add card
