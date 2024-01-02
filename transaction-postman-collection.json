@@ -25,7 +25,7 @@
 					"formdata": [
 						{
 							"key": "email",
-							"value": "test@test.com",
+							"value": "test2@test.com",
 							"type": "text"
 						},
 						{
@@ -40,23 +40,7 @@
 			"response": []
 		},
 		{
-			"name": "List Cards",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": "http://127.0.0.1:8000/users/1/cards"
-			},
-			"response": []
-		},
-		{
-			"name": "Create Card",
+			"name": "Login",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -64,18 +48,82 @@
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "label",
-							"value": "New Card55",
+							"key": "email",
+							"value": "test2@test.com",
 							"type": "text"
 						},
 						{
-							"key": "card_no",
-							"value": "22222222",
+							"key": "password",
+							"value": "123",
 							"type": "text"
 						}
 					]
 				},
-				"url": "http://127.0.0.1:8000/users/1/cards"
+				"url": "http://127.0.0.1:8000/login"
+			},
+			"response": []
+		},
+		{
+			"name": "List Cards",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": {
+						"payload": "{}",
+						"algorithm": "HS256",
+						"isSecretBase64Encoded": false,
+						"addTokenTo": "header",
+						"headerPrefix": "Bearer",
+						"queryParamKey": "token",
+						"header": "{}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT_trasnsaction}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://127.0.0.1:8000/cards"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Card",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT_trasnsaction}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "label",
+							"value": "New Card66999",
+							"type": "text"
+						},
+						{
+							"key": "card_no",
+							"value": "22222222334566",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://127.0.0.1:8000/cards"
 			},
 			"response": []
 		},
@@ -83,12 +131,18 @@
 			"name": "Delete Card",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT_trasnsaction}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": []
 				},
-				"url": "http://127.0.0.1:8000/users/1/cards/5"
+				"url": "http://127.0.0.1:8000/cards/9"
 			},
 			"response": []
 		},
@@ -96,7 +150,13 @@
 			"name": "Update Card",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT_trasnsaction}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -118,7 +178,7 @@
 						}
 					]
 				},
-				"url": "http://127.0.0.1:8000/users/1/cards/6"
+				"url": "http://127.0.0.1:8000/cards/9"
 			},
 			"response": []
 		},
@@ -126,18 +186,24 @@
 			"name": "Perform Transaction",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT_trasnsaction}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
 							"key": "card_id",
-							"value": "2",
+							"value": "11",
 							"type": "text"
 						},
 						{
 							"key": "amount",
-							"value": "100",
+							"value": "1000",
 							"type": "text"
 						},
 						{
@@ -147,7 +213,7 @@
 						}
 					]
 				},
-				"url": "http://127.0.0.1:8000/users/1/transactions/perform-transaction"
+				"url": "http://127.0.0.1:8000/transactions/perform-transaction"
 			},
 			"response": []
 		},
@@ -158,13 +224,19 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT_trasnsaction}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": []
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/users/1/transactions/search?label=up",
+					"raw": "http://127.0.0.1:8000/transactions/search?label=New",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -174,15 +246,13 @@
 					],
 					"port": "8000",
 					"path": [
-						"users",
-						"1",
 						"transactions",
 						"search"
 					],
 					"query": [
 						{
 							"key": "label",
-							"value": "up"
+							"value": "New"
 						},
 						{
 							"key": "card_number",
@@ -201,12 +271,18 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT_trasnsaction}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": []
 				},
-				"url": "http://127.0.0.1:8000/users/1/transactions/search/spending-statistics"
+				"url": "http://127.0.0.1:8000/transactions/search/spending-statistics"
 			},
 			"response": []
 		}
