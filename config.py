@@ -1,0 +1,1 @@
+SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://transaction:transaction2024@localhost/transaction"
