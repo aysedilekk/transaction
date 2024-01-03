@@ -63,13 +63,13 @@ async def login(email: str = Form(...), password: str = Form(...), db: Session =
         if not verify_password(password, user.password):
             raise HTTPException(status_code=401, detail="Invalid user credentials.")
 
-        card = db.query(Card).filter(Card.user_id == user.id).first()
-        card.status = 'ACTIVE'
-        db.commit()
+    card = db.query(Card).filter(Card.user_id == user.id).first()
+    card.status = 'ACTIVE'
+    db.commit()
 
-        return {
-            "access_token": create_access_token(user.email)
-        }
+    return {
+        "access_token": create_access_token(user.email)
+    }
 
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
