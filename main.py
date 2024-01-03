@@ -44,8 +44,8 @@ async def register(email: str = Form(...), password: str = Form(...), db: Sessio
         db.commit()
         db.refresh(new_user)
 
-        # Create card for that user and set it as ACTIVE
-        new_card = Card(label="Default Card", user_id=new_user.id, status='ACTIVE')
+        # Create card for that user
+        new_card = Card(label="Default Card", user_id=new_user.id)
         db.add(new_card)
         db.commit()
         db.refresh(new_card)
